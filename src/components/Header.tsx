@@ -1,4 +1,4 @@
-import React from "react";
+
 import crewo_icon from "../assets/crewo_icon.svg";
 import UserDropdown from "./UserDropdown";
 

@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 interface Skill {
   id: number | string;
   name: string;
+  
 }
 
+interface SkillsInputProps {
+  canProceed: boolean;
+  setCanProceed: (value: boolean) => void;
+  Error: string | null;
+  selectedSkills:Skill[];
+  setSelectedSkills: (value: Skill[])=> void;
 
+}
 
-
-const SkillsInput = () => {
-  const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
+const SkillsInput = ({ canProceed, setCanProceed, Error,selectedSkills,setSelectedSkills }: SkillsInputProps) => {  
   const [inputValue, setInputValue] = useState('');
   const [suggestedSkills, setSuggestedSkills] = useState<Skill[]>([
     { id: 1, name: 'React' },
@@ -47,45 +53,72 @@ const SkillsInput = () => {
     { id: 31, name: 'Google Meet' },
     { id: 32, name: 'Microsoft Teams' },
     { id: 33, name: 'WebRTC' }
- ]);
+  ]);
+
+  // Track available skills separately from selected skills
+  const [availableSkills, setAvailableSkills] = useState<Skill[]>(suggestedSkills);
+
+  useEffect(() => {
+    setCanProceed(selectedSkills.length > 0);
+    if(selectedSkills.length>0){
+      setCanProceed(true);
+    }
+  }, [selectedSkills, setCanProceed]);
 
   const handleAddSkill = (skill: Skill) => {
-    if (!selectedSkills.find(s => s.id === skill.id)) {
+    if (!selectedSkills.some(s => s.id === skill.id)) {
       setSelectedSkills([...selectedSkills, skill]);
-      setSuggestedSkills(suggestedSkills.filter(s => s.id !== skill.id));
+      setAvailableSkills(prev => prev.filter(s => s.id !== skill.id));
+      setInputValue('');
+
     }
   };
-  const handleinputAddSill = () => { 
-    console.log(inputValue);
-    let data = suggestedSkills.find(skill => skill.name.toLowerCase() === inputValue.toLowerCase())
-    if(data && (selectedSkills.find(skill => skill.id === data.id || skill.name === inputValue))){
-      console.log(data);
-      console.log(selectedSkills);
-      console.log('Skill already added');
-      console.log(suggestedSkills.find(skill => skill.id === data.id));
-      return null
-    }
-    if(data){
-      setSelectedSkills([...selectedSkills, { id:data.id , name: data.name }]);
-        setInputValue('');
-      } else {
-        setSelectedSkills([...selectedSkills, { id: suggestedSkills.length + 1, name: inputValue }]);
-        setSuggestedSkills([...suggestedSkills, { id: suggestedSkills.length + 1, name: inputValue }]);
-        setInputValue('');
-      }
-    };
 
+  const handleInputAddSkill = () => {
+    if (!inputValue.trim()) return;
+    
+    const normalizedInput = inputValue.trim().toLowerCase();
+    
+   
+    const existingSkill = availableSkills.find(
+      skill => skill.name.toLowerCase() === normalizedInput
+    );
+
+
+    const isAlreadySelected = selectedSkills.some(
+      skill => skill.name.toLowerCase() === normalizedInput
+    );
+
+    if (isAlreadySelected) {
+      return; 
+    }
+
+    if (existingSkill) {
+
+      handleAddSkill(existingSkill);
+    } else {
+
+      const newId = Math.max(...[...selectedSkills, ...availableSkills].map(s => Number(s.id)), 0) + 1;
+      const newSkill = { id: newId, name: inputValue.trim() };
+      
+      setSelectedSkills([...selectedSkills, newSkill]);
+      setSuggestedSkills(prev => [...prev, newSkill]);
+      setInputValue('');
+    }
+  };
 
   const handleRemoveSkill = (skillId: string | number) => {
-    setSelectedSkills(selectedSkills.filter(skill => skill.id !== skillId));
-    setSuggestedSkills([selectedSkills.find(skill => skill.id === skillId)!,...suggestedSkills ]);
+    const skillToRemove = selectedSkills.find(skill => skill.id === skillId);
+    
+    if (skillToRemove) {
+      setSelectedSkills(selectedSkills.filter(skill => skill.id !== skillId));
+      setAvailableSkills(prev => [...prev, skillToRemove]);
+    }
   };
 
-  const filteredSkills = suggestedSkills.filter(
-    (skill) =>
-      skill.name.toLowerCase().includes(inputValue.toLowerCase()) &&
-      !selectedSkills.some((selected) => selected.id === skill.id)
-  );
+  const filteredSkills = availableSkills.filter(
+    skill => skill.name.toLowerCase().includes(inputValue.toLowerCase())
+  ).slice(0, 10); 
 
   return (
     <div className="p-4 bg-black text-white">
@@ -93,41 +126,42 @@ const SkillsInput = () => {
         <h2 className="text-md">Your skills</h2>
         
         <div className="relative flex items-center gap-2">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleinputAddSill()}
-          placeholder="Enter skills here"
-          className="w-full p-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-gray-500"
-        />
-        {inputValue.length > 0 && (
-          <button className="absolute right-2 flex items-center focus:outline-none" onClick={handleinputAddSill}>
-            <span><IoIosAddCircleOutline size={24}/></span>
-          </button>
-        )}
-      </div>
-      <div className='flex relative items-center h-[0px]'>
-      {inputValue && filteredSkills.length > 0 && (
-          <div className="mt-2 max-h-40 overflow-auto bg-gray-700 rounded-md p-2 absolute w-full z-10 top-0 no-scrollbar">
-            {filteredSkills.map((skill) => (
-              <button
-                key={skill.id}
-                onClick={() => {
-                  handleAddSkill(skill);
-                  setInputValue('');}
-                }
-                className="w-full text-left p-2 hover:bg-gray-600 focus:outline-none focus:bg-gray-600 rounded-md"
-              >
-                {skill.name}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleInputAddSkill()}
+            placeholder="Enter skills here"
+            className="w-full p-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-gray-500"
+          />
+          {inputValue.trim().length > 0 && (
+            <button 
+              className="absolute right-2 flex items-center focus:outline-none" 
+              onClick={handleInputAddSkill}
+              aria-label="Add skill"
+            >
+              <IoIosAddCircleOutline size={24}/>
+            </button>
+          )}
+        </div>
 
+        <div className="relative">
+          {inputValue.trim() && filteredSkills.length > 0 && (
+            <div className="mt-2 max-h-40 overflow-auto bg-gray-700 rounded-md p-2 absolute w-full z-10 no-scrollbar">
+              {filteredSkills.map((skill) => (
+                <button
+                  key={skill.id}
+                  onClick={() => handleAddSkill(skill)}
+                  className="w-full text-left p-2 hover:bg-gray-600 focus:outline-none focus:bg-gray-600 rounded-md"
+                >
+                  {skill.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mt-2">
           {selectedSkills.map(skill => (
             <div
               key={skill.id}
@@ -137,6 +171,7 @@ const SkillsInput = () => {
               <button
                 onClick={() => handleRemoveSkill(skill.id)}
                 className="focus:outline-none"
+                aria-label={`Remove ${skill.name}`}
               >
                 <X size={16} />
               </button>
@@ -147,7 +182,7 @@ const SkillsInput = () => {
         <div>
           <h3 className="text-sm text-gray-400 mb-2">Suggested skills</h3>
           <div className="flex flex-wrap gap-2">
-            {suggestedSkills.slice(0,10).map(skill => (
+            {availableSkills.slice(0, 10).map(skill => (
               <button
                 key={skill.id}
                 onClick={() => handleAddSkill(skill)}
@@ -158,6 +193,9 @@ const SkillsInput = () => {
               </button>
             ))}
           </div>
+        </div>
+        <div className='mt-2 min-h-[30px]'>
+          {!canProceed && Error !=null && <p className="text-red-500">{Error}</p>}
         </div>
       </div>
     </div>

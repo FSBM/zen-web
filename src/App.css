@@ -1,3 +1,20 @@
 body{
   background-color: black;
 }
+
+input,
+textarea, select{
+  border: 1px solid white;
+  background: transparent;
+  transition: all 0.3s ease-in-out;
+}
+input :hover{
+ border: 2px solid white !important;
+ 
+}
+
+input,
+textarea, select :focus{
+  outline: none;
+}
+

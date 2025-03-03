@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { PiUserCircleThin } from "react-icons/pi";
 
 interface UserDropdownProps {
@@ -27,7 +27,7 @@ function UserDropdown({Items} : {Items:UserDropdownProps[]} ): JSX.Element {
             <button
                 id="dropdownUserAvatarButton"
                 onClick={toggleDropdown}
-                className="flex text-sm rounded-full md:me-0 absolute top-0 relative"
+                className="flex text-sm rounded-full md:me-0  top-0 relative"
                 type="button"
             >
                 <span className="sr-only">Open user menu</span>
