@@ -94,7 +94,6 @@ function OnboardLayout() {
         setValidationError(null);
     };
 
-    // New function to handle editing specific sections
     const handleEditSection = (section: string) => {
         switch (section) {
             case 'skills':
@@ -192,7 +191,7 @@ function OnboardLayout() {
             </div>
             <Footer
                 handleLeftClick={handleLeftClick}
-                handleRightClick={handleRightClick}
+                handleRightClick={stepCount === 4 ? handleSubmit : handleRightClick}
                 leftDisabled={stepCount === 0}
                 step={stepCount}
                 isFinal = {stepCount === 4}
