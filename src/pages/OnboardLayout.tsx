@@ -53,6 +53,7 @@ function OnboardLayout() {
             relevantCourses: '',
         },
     ]);
+    const [isNextClicked, SetNextClicked] = useState(false);
     const [selectedCareer, setSelectedCareer] = useState<Career[]>([]);
     const [AboutCareer, setAboutCareer] = useState<string>('');
 
@@ -73,6 +74,15 @@ function OnboardLayout() {
         else if (stepCount === 1 && (selectedInterest === undefined || selectedInterest.length === 0)) {
             setValidationError("Please select at least one Interest to proceed");
             setCanProceed(false);
+            return;
+        }
+        else if (stepCount === 2 
+            &&
+            educationRecords.length !== 0
+            && (educationRecords.filter((record) => record.institution === '' || record.degree === '' || record.field === '' || record.degreeType === '' || record.startDate === '' || record.endDate === '').length > 0)) {
+            console.log(educationRecords)
+            console.log(educationRecords.filter((record) => record.institution === '' || record.degree === '' || record.field === '' || record.degreeType === '' || record.startDate === '' || record.endDate === ''))
+            SetNextClicked(true);
             return;
         }
         else if ((stepCount === 3 && (selectedCareer === undefined || selectedCareer.length === 0 || AboutCareer.length < 4))) {
@@ -149,6 +159,7 @@ function OnboardLayout() {
                         <Onboarding3
                             educationRecords={educationRecords}
                             setEducationRecords={setEducationRecords}
+                            NextClicked={isNextClicked}
                         />
                     </div>
                 )}

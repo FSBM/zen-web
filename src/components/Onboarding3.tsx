@@ -11,14 +11,16 @@ interface EducationRecord {
     endDate: string;
     grade: string;
     relevantCourses: string;
+    
 }
 
 interface Onboarding3Props {
 
     educationRecords: EducationRecord[];
     setEducationRecords: (value: EducationRecord[]) => void;
+    NextClicked: boolean
 }
-export default function Onboarding3({ educationRecords, setEducationRecords }: Onboarding3Props) {
+export default function Onboarding3({ educationRecords, setEducationRecords,NextClicked }: Onboarding3Props) {
 
     const addEducationRecord = () => {
         setEducationRecords([
@@ -66,6 +68,7 @@ export default function Onboarding3({ educationRecords, setEducationRecords }: O
                     onChange={(field, value) => updateEducationRecord(record.id, field, value)}
                     educationRecords={educationRecords}
                     setEducationRecords={setEducationRecords}
+                    NextClicked={NextClicked}
                 />
             ))}
 

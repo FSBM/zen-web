@@ -18,6 +18,7 @@ interface EducationInputsProps {
   onChange: (field: string, value: string) => void;
   educationRecords:EducationRecord[];
   setEducationRecords:(value: EducationRecord[])=> void;
+  NextClicked: boolean
 }
 
 const EducationInputs: React.FC<EducationInputsProps> = ({
@@ -25,6 +26,7 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
   record,
   onChange,
   educationRecords,
+  NextClicked,
   setEducationRecords
 }) => {
   const degreeTypes = [
@@ -67,6 +69,9 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
             onChange={(e) => onChange('institution', e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-md"
           />
+          {record.institution === '' &&  NextClicked && (
+            <p className="text-red-500">Institution name is required.</p>
+          )}
         </div>
 
         <div>
@@ -80,6 +85,11 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
             onChange={(e) => onChange('degree', e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-md"
           />
+          {
+            record.degree === '' && NextClicked && (
+              <p className="text-red-500">Degree name is required.</p>
+            )
+          }
         </div>
 
         <div>
@@ -93,6 +103,11 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
             onChange={(e) => onChange('field', e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-md"
           />
+          {
+            record.field === '' && NextClicked && (
+              <p className="text-red-500">Field of study is required.</p>
+            )
+          }
         </div>
 
         <div>
@@ -124,6 +139,11 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
               </svg>
             </div>
           </div>
+          {
+            record.degreeType === '' && NextClicked && (
+              <p className="text-red-500">Degree type is required.</p>
+            )
+          }
         </div>
 
         <div>
@@ -139,6 +159,11 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
               placeholder="dd/mm/yyyy"
             />
           </div>
+          {
+            record.startDate === '' && NextClicked && (
+              <p className="text-red-500">Start date is required.</p>
+            )
+          }
         </div>
 
         <div>
@@ -154,6 +179,11 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
               placeholder="dd/mm/yyyy"
             />
           </div>
+          {
+            record.endDate === '' && NextClicked && (
+              <p className="text-red-500">End date is required.</p>
+            )
+          }
         </div>
 
         <div className="md:col-span-2">
@@ -167,6 +197,11 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
             onChange={(e) => onChange('grade', e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-md"
           />
+          {
+            record.grade === '' && NextClicked && (
+              <p className="text-red-500">Grade is required.</p>
+            )
+          }
         </div>
 
         <div className="md:col-span-2">
@@ -177,8 +212,12 @@ const EducationInputs: React.FC<EducationInputsProps> = ({
             placeholder="List any coursework, certifications, or projects relevant to your education"
             value={record.relevantCourses}
             onChange={(e) => onChange('relevantCourses', e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-md h-32"
+            className="w-full p-3 pb-0 border border-gray-300 rounded-md h-32"
           />
+          {
+          record.relevantCourses === '' && NextClicked && (
+            <p className="text-red-500">Relevant courses is required.</p>
+          )}
         </div>
       </div>
     </div>
