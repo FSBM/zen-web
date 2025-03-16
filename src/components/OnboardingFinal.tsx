@@ -6,6 +6,11 @@ interface Skill {
   id: number | string;
   name: string;
 }
+interface UserPrimary{
+  name:string;
+  gender: string;
+  DOB:string;
+}
 
 interface InterestCard {
   id: number;
@@ -39,6 +44,7 @@ interface OnboardingFinalProps {
   AboutCareer: string;
   handleEditSection: (section: string) => void;
   handleSubmit: () => void;
+  userPrimary:UserPrimary;
 }
 
 const OnboardingFinal: React.FC<OnboardingFinalProps> = ({
@@ -48,6 +54,7 @@ const OnboardingFinal: React.FC<OnboardingFinalProps> = ({
   selectedCareer,
   AboutCareer,
   handleEditSection,
+  userPrimary
 }) => {
   return (
     <div className="flex flex-col items-center p-6 max-w-4xl mx-auto w-full text-white">
@@ -56,6 +63,27 @@ const OnboardingFinal: React.FC<OnboardingFinalProps> = ({
         <p className="text-lg text-gray-400">
           Ensure everything looks good before proceeding to your dashboard.
         </p>
+      </div>
+      {/* Primary user detailss */}
+      <div className="w-full  rounded-lg p-6 mb-6 border border-gray-500">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-medium">User Details</h2>
+          <button 
+            onClick={() => handleEditSection('interests')} 
+            className="text-gray-400 hover:text-white"
+          >
+            <FiEdit2 size={20} />
+          </button>
+        </div>
+        <div className="flex flex-wrap gap-4">
+          {userPrimary  &&
+          <div className='flex flex-col md:flex-row md:gap-5 self-start pr-10 w-[80%]'>
+            <p>User Name: <b className='font-semibold'>{userPrimary.name}</b></p>
+            {userPrimary.gender !=='' && (<p>Gender: <b className='font-semibold'>{userPrimary.gender}</b></p>)}
+            <p>Date of Birth: <b className='font-semibold'>{userPrimary.DOB}</b></p>
+          </div>
+          }
+        </div>
       </div>
 
       {/* Interests Section */}
@@ -151,7 +179,7 @@ const OnboardingFinal: React.FC<OnboardingFinalProps> = ({
               </span>
             ))}
           </div>
-          <p className="text-gray-300">{AboutCareer}</p>
+          <p className="text-gray-300 px-3 "><p className='text-white inline'>Career Goals: </p>{AboutCareer}</p>
         </div>
       </div>
 

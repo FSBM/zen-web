@@ -51,7 +51,7 @@ export default function SixInterest({ selectedInterest, setSelectedInterest }: O
             description: "Protecting systems and data from digital threats"
         },
         {
-            id:6,
+            id:6, 
             icon: MdDesignServices,
             name: "UI/UX Design",
             description: "Creating intuitive and visually appealing user experiences"
@@ -79,7 +79,9 @@ export default function SixInterest({ selectedInterest, setSelectedInterest }: O
                         <div
                             key={interest.id}
                             onClick={() => handleInterestClick(interest.id)}
-                            className={`border ${selectedInterest.find((i) => i.id === interest.id) ? "border-purple-400": "border-gray-700" } rounded-lg p-6 cursor-pointer  hover:border-gray-500
+                            className={`border ${
+                                selectedInterest.find((i) => i.id === interest.id
+                            ) ? "border-purple-400": "border-gray-700" } rounded-lg p-6 cursor-pointer  
                             transition-all duration-200 ease-in-out
                             `}
 

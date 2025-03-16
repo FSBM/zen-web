@@ -34,11 +34,18 @@ const CareerInput = ({ canProceed, setCanProceed, Error,selectedCareer,setSelect
   }, [inputValue]);
   const [availableCareer, setAvailableCareer] = useState<Career[]>(suggestedCareer);
 
-  useEffect(() => {
-    setCanProceed(selectedCareer.length > 0);
-    if(selectedCareer.length>0){
-      setCanProceed(true);
+  useEffect(()=>{
+    if(AboutCareer.length > 3){
+      setInputValue(AboutCareer);
     }
+  },[])
+
+  useEffect(() => {
+    if(selectedCareer.length > 0){
+      setCanProceed(true);
+      setAvailableCareer(prev=> prev.filter(s => !selectedCareer.some(c => c.id === s.id)));
+    }
+    
   }, [selectedCareer, setCanProceed]);
 
   const handleAddCareer = (Career: Career) => {

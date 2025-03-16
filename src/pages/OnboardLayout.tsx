@@ -12,6 +12,11 @@ interface Skill {
     id: number | string;
     name: string;
 }
+interface UserPrimary{
+    name:string;
+    gender: string;
+    DOB:string;
+}
 
 interface InterestCard {
     id: number;
@@ -38,6 +43,11 @@ interface Career {
 }
 
 function OnboardLayout() {
+    const [UserPrimary, setUserPrimary] = useState<UserPrimary>({
+        name: '',
+        gender: '',
+        DOB: '',
+    })
     const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
     const [selectedInterest, setSelectedInterest] = useState<InterestCard[]>([]);
     const [educationRecords, setEducationRecords] = useState<EducationRecord[]>([
@@ -70,6 +80,11 @@ function OnboardLayout() {
         if (stepCount === 0 && !canProceed) {
             setValidationError("Please select at least one skill to proceed");
             return;
+
+        }
+        else if(stepCount ===0 && UserPrimary.name===""){
+            SetNextClicked(true);
+            return
         }
         else if (stepCount === 1 && (selectedInterest === undefined || selectedInterest.length === 0)) {
             setValidationError("Please select at least one Interest to proceed");
@@ -113,9 +128,9 @@ function OnboardLayout() {
         }
     };
 
-    // Handle final submission
     const handleSubmit = () => {
         console.log("Submitting profile data:", {
+            PrimaryUserDetails:UserPrimary,
             skills: selectedSkills,
             interests: selectedInterest,
             education: educationRecords,
@@ -138,11 +153,14 @@ function OnboardLayout() {
             <div className="flex flex-col justify-between overflow-y-auto">
                 {stepCount === 0 && (
                     <Onboarding1
+                        userPrimary={UserPrimary}
+                        setUserPrimary={setUserPrimary}
                         selectedSkills={selectedSkills}
                         setSelectedSkills={setSelectedSkills}
                         canProceed={canProceed}
                         setCanProceed={setCanProceed}
                         error={validationError}
+                        NextClicked={isNextClicked}
                     />
                 )}
                 {stepCount === 1 && (
@@ -178,6 +196,7 @@ function OnboardLayout() {
                 {stepCount === 4 && (
                     <div>
                         <OnboardingFinal
+                            userPrimary={UserPrimary}
                             selectedSkills={selectedSkills}
                             selectedInterest={selectedInterest || []}
                             educationRecords={educationRecords}

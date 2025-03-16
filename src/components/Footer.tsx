@@ -21,7 +21,7 @@ function Footer({leftDisabled, handleLeftClick,handleRightClick,step,isFinal}: P
                 style={{ width: `${(step / 4) * 100}%` }}></div>
 ''            </div>
             <div className="w-full flex justify-between px-2 py-1">
-                <Button label="<" color='white' borderColor='white'  textClr='white' isDisabled={leftDisabled} 
+                <Button label="<" color='transparent' borderColor='white'  textClr='white'   isDisabled={leftDisabled} 
                 onClick={handleLeftClick}/>
                 <Button label={isFinal ? "Submit" : "Next"} color='[#873EE8]' borderColor='white' textClr='white'
                 onClick={handleRightClick}/>

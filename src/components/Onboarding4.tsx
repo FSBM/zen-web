@@ -20,12 +20,18 @@ function Onboarding1({ canProceed, setCanProceed, error,selectedCareer,setSelect
         <div className="flex">
             <div className="flex flex-col items-center justify-center lg:w-1/2 text-white text-md mb-5">
                 <div className="self-start p-4 space-y-2">
-                    <p className="text-[14px]">1/4</p>
+                    <p className="text-[14px]">4/4</p>
                     <h2 className="text-3xl">What are your career goals?</h2>
                     <p>Let us know what you want to achieve on Crewo.</p>
                 </div>
-                <CareerInput canProceed={canProceed} setCanProceed={setCanProceed} Error={error} selectedCareer={selectedCareer}
-                        setSelectedCareer={setSelectedCareer} AboutCareer={AboutCareer} setAboutCareer={setAboutCareer}/>
+                <CareerInput canProceed={canProceed} 
+                setCanProceed={setCanProceed} 
+                Error={error} 
+                selectedCareer={selectedCareer}
+                        setSelectedCareer={setSelectedCareer} 
+                        AboutCareer={AboutCareer} 
+                        setAboutCareer={setAboutCareer}
+                        />
                 
             </div>
             <div></div>

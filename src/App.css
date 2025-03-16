@@ -17,4 +17,14 @@ input,
 textarea, select :focus{
   outline: none;
 }
+.boxWithBorder{
+  border-color: rgb(229 231 235);
+  border-radius: var(--borderRadius-medium);
+  border-style: solid;
+  border-width: var(--borderWidth-thin);
+}
+button{
+  background-color: transparent;
+}
+
 

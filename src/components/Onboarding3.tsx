@@ -53,8 +53,8 @@ export default function Onboarding3({ educationRecords, setEducationRecords,Next
         <div className="px-4 py-6 max-w-4xl p-4 text-white">
             <div className="mb-6 space-y-2">
                 <div className="text-[14px]">3/4</div>
-                <h1 className="text-3xl font-bold mb-2">What's your educational background?</h1>
-                <p className="text-gray-600">
+                <h1 className="text-3xl font-semibold mb-2">What's your educational background?</h1>
+                <p className="text-gray-400">
                     Add multiple entries, including certifications and achievements.
                 </p>
             </div>

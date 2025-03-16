@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { InputError } from './Error';
 
 interface Skill {
   id: number | string;
@@ -55,15 +56,17 @@ const SkillsInput = ({ canProceed, setCanProceed, Error,selectedSkills,setSelect
     { id: 33, name: 'WebRTC' }
   ]);
 
-  // Track available skills separately from selected skills
   const [availableSkills, setAvailableSkills] = useState<Skill[]>(suggestedSkills);
 
   useEffect(() => {
     setCanProceed(selectedSkills.length > 0);
     if(selectedSkills.length>0){
       setCanProceed(true);
+      setAvailableSkills(prev=> prev.filter(items => !selectedSkills.some(s => s.id === items.id)));
     }
   }, [selectedSkills, setCanProceed]);
+
+
 
   const handleAddSkill = (skill: Skill) => {
     if (!selectedSkills.some(s => s.id === skill.id)) {
@@ -112,7 +115,7 @@ const SkillsInput = ({ canProceed, setCanProceed, Error,selectedSkills,setSelect
     
     if (skillToRemove) {
       setSelectedSkills(selectedSkills.filter(skill => skill.id !== skillId));
-      setAvailableSkills(prev => [...prev, skillToRemove]);
+      setAvailableSkills(prev => [skillToRemove,...prev]);
     }
   };
 
@@ -195,7 +198,7 @@ const SkillsInput = ({ canProceed, setCanProceed, Error,selectedSkills,setSelect
           </div>
         </div>
         <div className='mt-2 min-h-[30px]'>
-          {!canProceed && Error !=null && <p className="text-red-500">{Error}</p>}
+          {!canProceed && Error !=null && <InputError error={Error}/> }
         </div>
       </div>
     </div>
