@@ -137,6 +137,7 @@ function OnboardLayout() {
             career: selectedCareer,
             careerGoals: AboutCareer
         });
+        window.location.href = '/Dashboard';
         
     };
 

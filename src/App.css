@@ -26,5 +26,8 @@ textarea, select :focus{
 button{
   background-color: transparent;
 }
+.mainLayout{
+  overflow: hidden !important;
+}
 
 
