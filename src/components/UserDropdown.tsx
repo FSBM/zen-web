@@ -38,10 +38,10 @@ function UserDropdown({Items} : {Items:UserDropdownProps[]} ): JSX.Element {
             <motion.div
             initial={{ opacity: 0, x: 100 }} 
             animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 100 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
                 className={`absolute right-1 top-[50px] z-10 border-[1px] 
                     border-[#7B7575] backdrop-blur-sm divide-y 
-                    divide-[#7B7575] rounded-lg shadow-sm w-44 transition-all ease-in-out duration-300 `}
+                    divide-[#7B7575] rounded-lg shadow-sm w-44 `}
             >
                     {DropItems.length>0 && DropItems.map((item, index) => (
                         <button className='text-white p-2 text-sm' key={index} onClick={()=>handleDropClick(item.toPage)}>{item.DropDownItems}</button>

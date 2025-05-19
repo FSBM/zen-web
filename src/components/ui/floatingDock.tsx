@@ -17,6 +17,7 @@ export const FloatingDock = ({
   items,
   desktopClassName,
   mobileClassName,
+  
 }: {
   items: { title: string; icon: React.ReactNode; href: string }[];
   desktopClassName?: string;
@@ -95,7 +96,7 @@ const FloatingDockDesktop = ({
   return (
     <motion.div
       className={cn(
-        "mx-auto w-16 flex flex-col pt-2 items-center justify-center gap-4 rounded-2xl bg-gray-50 px-4 pb-3 md:flex dark:bg-neutral-900",
+        "mx-auto w-16  flex flex-col pt-2 items-center justify-center gap-4 rounded-lg bg-gray-50 px-4 pb-3 md:flex dark:bg-neutral-900",
         className,
       )}
     >
@@ -110,8 +111,9 @@ function IconContainer({
   title,
   icon,
   href,
+  
 }: {
-  title: string;
+  title: string;  
   icon: React.ReactNode;
   href: string;
 }) {
@@ -122,10 +124,10 @@ function IconContainer({
       <motion.div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800"
+        className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-800 border border-white/20"
         animate={{
-          width: hovered ? 80 : 40,
-          height: hovered ? 80 : 40,
+          width: hovered ? 60 : 40,
+          height: hovered ? 60 : 40,
         }}
         transition={{ type: "spring", stiffness: 150, damping: 12 }}
       >
@@ -135,7 +137,7 @@ function IconContainer({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="absolute left-1/2 bottom-full mb-2 -translate-x-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-1 text-xs whitespace-pre text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white z-10"
+              className="absolute  left-1/2 bottom-full  -translate-x-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-1 text-xs whitespace-pre text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white z-10"
             >
               {title}
             </motion.div>
