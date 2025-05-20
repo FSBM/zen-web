@@ -34,8 +34,8 @@ export default function SearchInput({ placeholder, trendingSearches }: { placeho
         <h2 className='text-center font-light text-sm'>Trending searches</h2>
         <div className='flex gap-2 justify-center mt-2'>
         {trendingSearches && trendingSearches.slice(0, 3).map((item: string, idx: number) => (
-        <div className="rounded-full border border-white/20 bg-neutral-900 p-1 text-xs px-3 max-w-24" key={idx}>
-          {item.length > 15 ? item.slice(0,14) + ".." : item.slice(0, 15)}
+        <div className="rounded-full border border-white/20 bg-neutral-900 p-1 text-xs px-3 max-w-50" key={idx}>
+          {/* {item.length > 15 ? item.slice(0,14) + ".." : item.slice(0, 15)} */}{item}
         </div>
          ))}
          </div>
