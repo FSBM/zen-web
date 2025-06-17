@@ -43,3 +43,5 @@ export default function SearchInput({ placeholder, trendingSearches }: { placeho
     </form>
   );
 }
+
+// paused since so many days 
