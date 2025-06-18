@@ -44,6 +44,7 @@ export default function PersonalDetails({ userPrimary, setUserPrimary, NextClick
           selectedDate={userPrimary.DOB}
           onDateChange={(DOB: any) => setUserPrimary({ ...userPrimary, DOB })}
           label="Date of Birth"
+          required={true}
           error={''}
         />
       </div>
